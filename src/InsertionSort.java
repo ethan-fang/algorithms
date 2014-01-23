@@ -10,6 +10,7 @@ public class InsertionSort {
 		insertion_sort(s);
 	}
 
+	//O(n2)
 	static void insertion_sort(int s[]) {
 		System.out.println("before " + Arrays.toString(s));
 		int n = s.length;
