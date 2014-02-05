@@ -73,10 +73,18 @@ public class Heap {
 		}
 	}
 	
-	public Heap(List<Integer> array) {
-		mQueue = new ArrayList<Integer>();
-		for (Integer value : array) {
-			insert(value);
+	public Heap(List<Integer> array, boolean bubbleDown) {
+		if (bubbleDown) {
+			mQueue = new ArrayList<Integer>(array);
+			int start = mQueue.size() / 2;
+			for (int i = start; i >= 0; i--) {
+				bubbleDown(i);
+			}
+		} else {
+			mQueue = new ArrayList<Integer>();
+			for (Integer value : array) {
+				insert(value);
+			}
 		}
 	}
 	
@@ -98,7 +106,7 @@ public class Heap {
 	public static void main(String[] args) {
 
 		List<Integer> a = Arrays.asList(2,6,324,23,43,4234,324,324,326,436,243);
-		Heap heap = new Heap(a);
+		Heap heap = new Heap(a, true);
 		System.out.println("heap is " + heap);
 		heap.sortAndPrint();
 	}
