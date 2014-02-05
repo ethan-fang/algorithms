@@ -9,18 +9,24 @@ public class Heap {
 	private List<Integer> mQueue;
 
 	public int parent(int n) {
-		if (n == 1)
+		if (n == 0)
 			return -1;
 		else
-			return n / 2;
+			return (n - 1) / 2;
 	}
 
 	public int leftChild(int n) {
-		return n * 2;
+		if (n == 0) {
+			return 1;
+		}
+		return n * 2 + 1;
 	}
 
 	public int rightChild(int n) {
-		return n * 2 + 1;
+		if (n == 0) {
+			return 2;
+		}
+		return n * 2 + 2;
 	}
 
 	public void insert(Integer x)
@@ -54,10 +60,7 @@ public class Heap {
 	
 	private void bubbleDown(int position) {
 		int minIndex = position;
-		int child = position * 2;
-		if (child == 0) {
-			child++;
-		}
+		int child = leftChild(position);
 		for (int i = 0; i < 2; i++) {
 			if ((child + i) < mQueue.size()) {
 				if (mQueue.get(child+i) <= mQueue.get(minIndex)) {
@@ -88,6 +91,22 @@ public class Heap {
 		}
 	}
 	
+	public boolean isKthSmallestValueBiggerThanX(int k, int x) {
+		int count = heapCompare(0, k, x);
+		return count <= 0;
+	}
+	
+	private int heapCompare(int position, int count, int x) {
+		if ((count <= 0) || (position > mQueue.size() - 1)) {
+			return count;
+		}
+		if (mQueue.get(position) < x) {
+			count = heapCompare(leftChild(position), count - 1, x);
+			count = heapCompare(rightChild(position), count, x); 
+		}
+		return count;
+	}
+	
 	public void sortAndPrint() {
 		while (mQueue.size() != 0) {
 			System.out.println(extractMin());
@@ -104,10 +123,14 @@ public class Heap {
 	}
 
 	public static void main(String[] args) {
-
 		List<Integer> a = Arrays.asList(2,6,324,23,43,4234,324,324,326,436,243);
 		Heap heap = new Heap(a, true);
 		System.out.println("heap is " + heap);
+		
+		int k = 5;
+		int value = 243;
+		System.out.println("Is " + k + "th" + " elements smaller than " + value + " " + heap.isKthSmallestValueBiggerThanX(k, value));
+		
 		heap.sortAndPrint();
 	}
 
