@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 
 public class Graph {
@@ -73,5 +75,36 @@ public class Graph {
 	public static void main(String[] args) {
 		Graph graph = new Graph(false);
 		graph.printGraph();
+		graph.bfs(1);
+	}
+	
+	public void bfs(int start) {
+		Queue<Integer> queue = new LinkedList<Integer>();
+		boolean[] visited = new boolean[max];
+		boolean[] processed = new boolean[max];
+		
+		System.out.println();
+		System.out.println("----");
+		queue.add(start);
+		System.out.print(edges[start].index + ",");
+		visited[start] = true;
+		
+		while (!queue.isEmpty()) {
+			int index = queue.poll();
+			if (processed[index]) {
+				continue;
+			}
+			EdgeNode node = edges[index];
+			node = node.next;
+			while (node != null) {
+				if (!visited[node.index]) {
+					System.out.print(node.index + ",");
+					queue.add(node.index);
+					visited[node.index] = true;
+				}
+				node = node.next;
+			}
+			processed[index] = true;
+		}
 	}
 }
