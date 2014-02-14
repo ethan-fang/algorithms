@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 
 public class Graph {
@@ -17,7 +18,7 @@ public class Graph {
 	
 	EdgeNode[] edges;
 	
-	int max = 6;
+	static int max = 7;
 	int nedges;
 	boolean directed;
 	
@@ -28,9 +29,9 @@ public class Graph {
 		
 		insertEdge(1, 2, false);
 		insertEdge(1, 5, false);
+		insertEdge(1, 6, false);
 		insertEdge(2, 5, false);
 		insertEdge(5, 4, false);
-		insertEdge(4, 2, false);
 		insertEdge(2, 3, false);
 		insertEdge(4, 3, false);
 	}
@@ -72,11 +73,6 @@ public class Graph {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Graph graph = new Graph(false);
-		graph.printGraph();
-		graph.bfs(1);
-	}
 	
 	public void bfs(int start) {
 		Queue<Integer> queue = new LinkedList<Integer>();
@@ -107,4 +103,34 @@ public class Graph {
 			processed[index] = true;
 		}
 	}
+	
+	
+	static boolean[] dfs_discovered = new boolean[max];
+	static boolean[] dfs_processed = new boolean[max];
+	
+	public void dfs(int start) {
+		
+		
+		EdgeNode node = edges[start];
+		if (!dfs_discovered[start]) {
+			System.out.print(node.index + ",");
+			dfs_discovered[start] = true;
+			
+			EdgeNode next = node.next;
+			while (next != null) {
+				dfs(next.index);
+				next = next.next;
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		Graph graph = new Graph(false);
+		graph.printGraph();
+		graph.bfs(1);
+		System.out.println();
+		System.out.println("----");
+		graph.dfs(1);
+	}
+	
 }
