@@ -1,3 +1,4 @@
+package Graph;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -5,7 +6,7 @@ import java.util.Queue;
 import java.util.Stack;
 
 
-public class Graph {
+public class bfs_dfs {
 
 	class EdgeNode {
 		int index;
@@ -22,7 +23,7 @@ public class Graph {
 	int nedges;
 	boolean directed;
 	
-	public Graph(boolean directed) {
+	public bfs_dfs(boolean directed) {
 		edges = new EdgeNode[max];
 		nedges = 0;
 		this.directed = directed;
@@ -125,7 +126,7 @@ public class Graph {
 	}
 	
 	public static void main(String[] args) {
-		Graph graph = new Graph(false);
+		bfs_dfs graph = new bfs_dfs(false);
 		graph.printGraph();
 		graph.bfs(1);
 		System.out.println();
