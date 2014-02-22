@@ -2,6 +2,72 @@ package tree;
 
 import java.util.Stack;
 class TreeTraversal {
+	
+	private static class BinaryTree {
+		int value;
+		BinaryTree left;
+		BinaryTree right;
+		public BinaryTree (int k) {
+			value = k;
+		}
+
+		//now start defining the key post-order traversal method using Stack!
+		//firstly we need using stack so better import stack!
+		public void postOrderWithoutRecursive() {
+			//as we discussed in slides, we need two support data structure/varialbes
+			//1. a stack to store the pointers of each traversed tree node 
+			//2. a previous tree node pointer to know where we were
+			Stack<BinaryTree> treeNodes = new Stack<BinaryTree>();
+
+			//Set as an arbitrary dummy tree node other than null, so it won't be stuck with the problem that if root 
+			//has no right child, the code stops immediately
+			BinaryTree previous = new BinaryTree(1000);
+			
+			//firstly, we add the current root to stack for processing
+			treeNodes.push(this);
+			//now define the key loop
+			while(!treeNodes.isEmpty()) {
+				BinaryTree current = treeNodes.peek();
+				//firstly make sure it is not a null
+				if(current == null) 
+					treeNodes.pop();
+				//now check if it is leaf node to be printed
+				else if(current.left==null && current.right==null) {
+					//always check the current's left/child not the class scope ones!
+					System.out.print(current.value);
+					treeNodes.pop();//need to pop it whenever we print it out
+				}
+				//it is always associated to the pointer not the value in the class scope
+				//3rd, check if previous pointer is our left child, if so, we need push right child for processing
+				else if(current.left == previous)
+					treeNodes.push(current.right);
+				//4th, if previous pointer is current pointer's right child, print itself!
+				else if(current.right == previous) {
+					System.out.print(current.value);
+					treeNodes.pop();
+				}
+				//otherwise, push the left child for processing!
+				else
+					treeNodes.push(current.left);
+				
+				//almost forgot to update the previous pointer
+				previous = current;
+			}
+		}
+		
+		
+		//firstly, write a normal post-order traversal for verification
+		public void postOrderRecursive() {
+			if(left != null)
+				left.postOrderRecursive();
+			if(right != null)
+				right.postOrderRecursive();
+			if(this!=null)
+				System.out.print(value);
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		//now create a test case
 		//    1
@@ -21,70 +87,7 @@ class TreeTraversal {
 		myTree.postOrderWithoutRecursive();
 	}
 }
-class BinaryTree {
-	int value;
-	BinaryTree left;
-	BinaryTree right;
-	public BinaryTree (int k) {
-		value = k;
-	}
 
-	//now start defining the key post-order traversal method using Stack!
-	//firstly we need using stack so better import stack!
-	public void postOrderWithoutRecursive() {
-		//as we discussed in slides, we need two support data structure/varialbes
-		//1. a stack to store the pointers of each traversed tree node 
-		//2. a previous tree node pointer to know where we were
-		Stack<BinaryTree> treeNodes = new Stack<BinaryTree>();
-
-		//Set as an arbitrary dummy tree node other than null, so it won't be stuck with the problem that if root 
-		//has no right child, the code stops immediately
-		BinaryTree previous = new BinaryTree(1000);
-		
-		//firstly, we add the current root to stack for processing
-		treeNodes.push(this);
-		//now define the key loop
-		while(!treeNodes.isEmpty()) {
-			BinaryTree current = treeNodes.peek();
-			//firstly make sure it is not a null
-			if(current == null) 
-				treeNodes.pop();
-			//now check if it is leaf node to be printed
-			else if(current.left==null && current.right==null) {
-				//always check the current's left/child not the class scope ones!
-				System.out.print(current.value);
-				treeNodes.pop();//need to pop it whenever we print it out
-			}
-			//it is always associated to the pointer not the value in the class scope
-			//3rd, check if previous pointer is our left child, if so, we need push right child for processing
-			else if(current.left == previous)
-				treeNodes.push(current.right);
-			//4th, if previous pointer is current pointer's right child, print itself!
-			else if(current.right == previous) {
-				System.out.print(current.value);
-				treeNodes.pop();
-			}
-			//otherwise, push the left child for processing!
-			else
-				treeNodes.push(current.left);
-			
-			//almost forgot to update the previous pointer
-			previous = current;
-		}
-	}
-	
-	
-	//firstly, write a normal post-order traversal for verification
-	public void postOrderRecursive() {
-		if(left != null)
-			left.postOrderRecursive();
-		if(right != null)
-			right.postOrderRecursive();
-		if(this!=null)
-			System.out.print(value);
-	}
-	
-}
 
 
 /**
