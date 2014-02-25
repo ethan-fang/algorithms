@@ -2,7 +2,7 @@ package Set;
 
 public class PrintAllSizeKSubset {
 	public static void main(String[] args) {
-		int[] array = {1, 2, 3, 4, 5};
+		int[] array = {1, 2, 3, 4, 4};
 		boolean[] used = new boolean[5];
 		PrintAllSizeKSubset(array, used, 0, 0, 2);
 	}
