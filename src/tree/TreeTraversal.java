@@ -78,7 +78,7 @@ class TreeTraversal {
 		}
 
 		public void preOrderImplementation() {
-			Stack<BinaryTree> treeNodes = new Stack<>();
+			Stack<BinaryTree> treeNodes = new Stack<BinaryTree>();
 			BinaryTree previous = null;
 			treeNodes.add(this);
 
