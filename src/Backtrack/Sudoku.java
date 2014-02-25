@@ -59,7 +59,7 @@ public class Sudoku extends Backtrack {
 			int x = p.x;
 			int y = p.y;
 			
-			Set<Integer> rowPossibles = new HashSet<>(ALL_POSSIBLES);
+			Set<Integer> rowPossibles = new HashSet<Integer>(ALL_POSSIBLES);
 			
 			for (int i = 0; i < DIMENSTION; i++) {
 				if (m[x][i] != 0) {
