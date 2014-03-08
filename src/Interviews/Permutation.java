@@ -1,4 +1,5 @@
-package String;
+package Interviews;
+
 class Permutation 
 {
 	//now test the code
@@ -19,6 +20,7 @@ class Permutation
 			System.out.println(new String(inputs));
 			return;
 		}
+
 		//now firstly keep the current char order in the array and proceed to next
 		PrintPermutation(inputs, currentFocus+1);
 
@@ -26,8 +28,7 @@ class Permutation
 		for(int i=currentFocus+1; i<inputs.length; i++)
 		{
 			//swap the char pair of position (currentFocus, i)
-			//in order to remove the duplicates, the key is to check if the two char 
-			//unequal before swapping!
+			//in order to remove the duplicates, the key is to check if the two char unequal before swapping!
 			boolean ifAppear = false;
 			for(int j=0; j<i;j++)
 			{
@@ -37,6 +38,7 @@ class Permutation
 					break;
 				}
 			}
+
 			if(ifAppear)
 				continue;
 			Swap(inputs,currentFocus, i);
@@ -52,3 +54,4 @@ class Permutation
 		inputs[b] = temp;
 	}
 }
+
